@@ -1,9 +1,12 @@
 CREATE TABLE Member (
-    id SERIAL PRIMARY KEY,
+    id_ SERIAL PRIMARY KEY,
     member_id VARCHAR(50) UNIQUE NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    contact_information TEXT,
-    address TEXT,
+    member_name VARCHAR(255) NOT NULL,
+    phone_num VARCHAR(20),
+    email_address VARCHAR(255),
+    address_line1 VARCHAR(4),
+    address_line2 VARCHAR(20),
+    postal_code VARCHAR(10),
     membership_status VARCHAR(50),
-    registration_date DATE
+    registration_date TIMESTAMP null
 );
