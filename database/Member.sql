@@ -1,4 +1,3 @@
--- Active: 1770205800437@@127.0.0.1@5432@postgres@library_db
 CREATE TABLE Member (
     id_ SERIAL PRIMARY KEY,
     member_id VARCHAR(50) UNIQUE NOT NULL,

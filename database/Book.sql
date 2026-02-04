@@ -1,4 +1,3 @@
--- Active: 1770205800437@@127.0.0.1@5432@postgres@library_db
 CREATE TABLE Book (
     book_id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
