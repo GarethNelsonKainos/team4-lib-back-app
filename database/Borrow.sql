@@ -5,5 +5,5 @@ CREATE TABLE Borrow (
     borrow_date DATE NOT NULL,
     return_date DATE,
     condition VARCHAR(20) CHECK (condition IN ('Good', 'Damaged', 'Lost')),
-    late_fee DECIMAL(3, 2)
+    late_fee DECIMAL(5, 2)
 );
