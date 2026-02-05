@@ -7,7 +7,7 @@ import dashboardRouter from './routes/dashboard.routes';
 import reportsRouter from './routes/reports.routes';
 
 const app = express();
-const PORT = process.env.PORT || 123;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
