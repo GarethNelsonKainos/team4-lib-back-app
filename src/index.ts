@@ -1,11 +1,13 @@
 import express from 'express';
-import booksRouter from './routes/books.routes';
-import copiesRouter from './routes/copies.routes';
-import membersRouter from './routes/members.routes';
-import borrowsRouter from './routes/borrows.routes';
+import booksRouter from './controllers/books.controller';
+import copiesRouter from './controllers/copies.controller';
+import membersRouter from './controllers/memberManagementController';
+import borrowsRouter from './controllers/borrowController';
+import dashboardRouter from './controllers/dashboard.controller';
+import reportsRouter from './controllers/reports.controller';
 
 const app = express();
-const PORT = process.env.PORT || 123;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -16,10 +18,12 @@ app.use('/books', booksRouter);
 app.use('/copies', copiesRouter);
 app.use('/members', membersRouter);
 app.use('/borrows', borrowsRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/reports', reportsRouter);
 
 // Health check endpoint
 app.get('/', (req, res) => {
-  res.json({ message: 'Team4 Library Backend API', status: 'running' });
+    res.json({ message: 'Team4 Library Backend API', status: 'running' });
 });
 
 // Start server
@@ -37,30 +41,15 @@ app.listen(PORT, () => {
     ║                                        ║
     ╚════════════════════════════════════════╝
   `;
-  
-  console.log(asciiArt);
-  console.log('✨ Application initialized successfully!\n');
-  console.log('📚 Available endpoints:');
-  console.log('  GET    /books');
-  console.log('  POST   /books');
-  console.log('  GET    /books/:id');
-  console.log('  POST   /books/:id');
-  console.log('  DELETE /books/:id');
-  console.log('  GET    /books/:id/copies');
-  console.log('  POST   /copies');
-  console.log('  GET    /copies/:id');
-  console.log('  PUT    /copies/:id');
-  console.log('  GET    /copies/:id/history');
-  console.log('  GET    /members');
-  console.log('  POST   /members');
-  console.log('  GET    /members/:id');
-  console.log('  PUT    /members/:id');
-  console.log('  DELETE /members/:id');
-  console.log('  GET    /members/:id/borrowing-history');
-  console.log('  GET    /members/:id/current-borrows');
-  console.log('  GET    /borrows');
-  console.log('  POST   /borrows');
-  console.log('  GET    /borrows/:id');
-  console.log('  PUT    /borrows/:id');
-  console.log('  DELETE /borrows/:id\n');
+
+    console.log(asciiArt);
+    console.log('✨ Application initialized successfully!\n');
+    console.log('📚 Available endpoints:');
+    console.log('\n/books - Manage books');
+    console.log('/copies - Manage book copies');
+    console.log('/members - Manage library members');
+    console.log('/borrows - Manage borrowing records');
+    console.log('/dashboard - View library dashboard');
+    console.log('/reports - Generate library reports\n');
+    console.log('🚀 Server is up and running!');
 });

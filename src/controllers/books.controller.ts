@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
 export const getAllBooks = async (req: Request, res: Response) => {
   try {
@@ -91,3 +91,19 @@ export const getBookCopies = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: 'Error retrieving book copies', error });
   }
 };
+
+const router = Router();
+
+router.get('/', getAllBooks);
+
+router.post('/', createBook);
+
+router.get('/:id', getBookById);
+
+router.put('/:id', updateBook);
+
+router.delete('/:id', deleteBook);
+
+router.get('/:id/copies', getBookCopies);
+
+export default router;

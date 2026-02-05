@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
 export const createCopy = async (req: Request, res: Response) => {
   try {
@@ -103,3 +103,19 @@ export const getCopyHistory = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: 'Error retrieving copy history', error });
   }
 };
+
+const router = Router();
+
+router.post('/', createCopy);
+
+router.get('/', getAllCopies);
+
+router.get('/:id', getCopyById);
+
+router.put('/:id', updateCopy);
+
+router.delete('/:id', deleteCopy);
+
+router.get('/:id/history', getCopyHistory);
+
+export default router;
