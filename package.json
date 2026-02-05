@@ -1,0 +1,34 @@
+{
+  "name": "team4-lib-back-app",
+  "version": "1.0.0",
+  "description": "Team 4 Library Backend Application Feb/March 2026",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GarethNelsonKainos/team4-lib-back-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/GarethNelsonKainos/team4-lib-back-app/issues"
+  },
+  "homepage": "https://github.com/GarethNelsonKainos/team4-lib-back-app#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.2.0",
+    "dotenv": "^17.2.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
