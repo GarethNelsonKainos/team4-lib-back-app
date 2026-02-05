@@ -4,12 +4,15 @@ import {
   getCopyById,
   updateCopy,
   getCopyHistory,
-  deleteCopy
+  deleteCopy,
+  getAllCopies
 } from '../controllers/copies.controller';
 
 const router = Router();
 
 router.post('/', createCopy);
+
+router.get('/', getAllCopies);
 
 router.get('/:id', getCopyById);
 

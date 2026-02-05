@@ -21,6 +21,15 @@ export const createCopy = async (req: Request, res: Response) => {
   }
 };
 
+export const getAllCopies = async (req: Request, res: Response) => {
+  try {
+    // TODO: Query database for all copies
+    res.status(200).json({ success: true, message: 'Copies retrieved', data: [] });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Error retrieving copies', error });
+  }
+};
+
 export const getCopyById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
