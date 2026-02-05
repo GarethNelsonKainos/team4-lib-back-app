@@ -2,55 +2,108 @@ import { Request, Response, NextFunction } from 'express';
 
 // GET /reports/popular-books
 export const getPopularBooks = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Popular books endpoint' });
+	const { period } = req.query;
+	if (period && !['week', 'month', 'year'].includes(period as string)) {
+		return res.status(400).json({ error: 'Invalid period. Use week, month, or year.' });
+	}
+	res.status(200).json({
+		period: period || 'week',
+		message: 'Popular books report generated.'
+	});
 };
 
 // GET /reports/genre-analytics
 export const getGenreAnalytics = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Genre analytics endpoint' });
+	const { period } = req.query;
+	if (period && !['week', 'month', 'year'].includes(period as string)) {
+		return res.status(400).json({ error: 'Invalid period. Use week, month, or year.' });
+	}
+	res.status(200).json({
+		period: period || 'week',
+		message: 'Genre analytics report generated.'
+	});
 };
 
 // GET /reports/author-analytics
 export const getAuthorAnalytics = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Author analytics endpoint' });
+	const { period } = req.query;
+	if (period && !['week', 'month', 'year'].includes(period as string)) {
+		return res.status(400).json({ error: 'Invalid period. Use week, month, or year.' });
+	}
+	res.status(200).json({
+		period: period || 'week',
+		message: 'Author analytics report generated.'
+	});
 };
 
 // GET /reports/member-activity
 export const getMemberActivity = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Member activity endpoint' });
+	const { activeOnly } = req.query;
+	res.status(200).json({
+		filter: activeOnly === 'true' ? 'active' : 'all',
+		message: 'Member activity report generated.'
+	});
 };
 
 // GET /reports/collection-utilization
 export const getCollectionUtilization = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Collection utilization endpoint' });
+	const { neverBorrowed } = req.query;
+	res.status(200).json({
+		filter: neverBorrowed === 'true' ? 'neverBorrowed' : 'all',
+		message: 'Collection utilization report generated.'
+	});
 };
 
 // GET /reports/borrowing-trends
 export const getBorrowingTrends = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Borrowing trends endpoint' });
+	const { season } = req.query;
+	res.status(200).json({
+		season: season || 'all',
+		message: 'Borrowing trends report generated.'
+	});
 };
 
 // GET /reports/copy-efficiency
 export const getCopyEfficiency = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Copy efficiency endpoint' });
+	const { minUsage } = req.query;
+	res.status(200).json({
+		minUsage: minUsage || 0,
+		message: 'Copy efficiency report generated.'
+	});
 };
 
 // GET /reports/overdue-summary
 export const getOverdueSummary = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Overdue summary endpoint' });
+	const { memberId } = req.query;
+	res.status(200).json({
+		memberId: memberId || null,
+		message: 'Overdue summary report generated.'
+	});
 };
 
 // GET /reports/inventory-status
 export const getInventoryStatus = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Inventory status endpoint' });
+	const { availableOnly } = req.query;
+	res.status(200).json({
+		filter: availableOnly === 'true' ? 'available' : 'all',
+		message: 'Inventory status report generated.'
+	});
 };
 
 // GET /reports/member-compliance
 export const getMemberCompliance = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Member compliance endpoint' });
+	const { atLimit } = req.query;
+	res.status(200).json({
+		filter: atLimit === 'true' ? 'atLimit' : 'all',
+		message: 'Member compliance report generated.'
+	});
 };
 
 // GET /reports/collection-gaps
 export const getCollectionGaps = (req: Request, res: Response, next: NextFunction) => {
-	res.status(200).json({ message: 'Collection gaps endpoint' });
+	const { popularOnly } = req.query;
+	res.status(200).json({
+		filter: popularOnly === 'true' ? 'popularOnly' : 'all',
+		message: 'Collection gaps report generated.'
+	});
 };
