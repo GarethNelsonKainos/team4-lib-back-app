@@ -1,5 +1,5 @@
 CREATE TABLE Member (
-    id_ SERIAL PRIMARY KEY,
+    member_pk_id SERIAL PRIMARY KEY,
     member_id VARCHAR(50) UNIQUE NOT NULL,
     member_name VARCHAR(255) NOT NULL,
     phone_num VARCHAR(20),
