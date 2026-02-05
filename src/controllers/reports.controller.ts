@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 
 // GET /reports/popular-books
 export const getPopularBooks = (req: Request, res: Response, next: NextFunction) => {
 	const { period } = req.query;
 	if (period && !['week', 'month', 'year'].includes(period as string)) {
-		return res.status(400).json({ error: 'Invalid period. Use week, month, or year.' });
+		return res.status(400).send();
 	}
 	res.status(200).json({
 		period: period || 'week',
@@ -16,7 +17,7 @@ export const getPopularBooks = (req: Request, res: Response, next: NextFunction)
 export const getGenreAnalytics = (req: Request, res: Response, next: NextFunction) => {
 	const { period } = req.query;
 	if (period && !['week', 'month', 'year'].includes(period as string)) {
-		return res.status(400).json({ error: 'Invalid period. Use week, month, or year.' });
+		return res.status(400).send();
 	}
 	res.status(200).json({
 		period: period || 'week',
@@ -28,7 +29,7 @@ export const getGenreAnalytics = (req: Request, res: Response, next: NextFunctio
 export const getAuthorAnalytics = (req: Request, res: Response, next: NextFunction) => {
 	const { period } = req.query;
 	if (period && !['week', 'month', 'year'].includes(period as string)) {
-		return res.status(400).json({ error: 'Invalid period. Use week, month, or year.' });
+		return res.status(400).send();
 	}
 	res.status(200).json({
 		period: period || 'week',
@@ -107,3 +108,19 @@ export const getCollectionGaps = (req: Request, res: Response, next: NextFunctio
 		message: 'Collection gaps report generated.'
 	});
 };
+
+const router = Router();
+
+router.get('/popular-books', getPopularBooks);
+router.get('/genre-analytics', getGenreAnalytics);
+router.get('/author-analytics', getAuthorAnalytics);
+router.get('/member-activity', getMemberActivity);
+router.get('/collection-utilization', getCollectionUtilization);
+router.get('/borrowing-trends', getBorrowingTrends);
+router.get('/copy-efficiency', getCopyEfficiency);
+router.get('/overdue-summary', getOverdueSummary);
+router.get('/inventory-status', getInventoryStatus);
+router.get('/member-compliance', getMemberCompliance);
+router.get('/collection-gaps', getCollectionGaps);
+
+export default router;
