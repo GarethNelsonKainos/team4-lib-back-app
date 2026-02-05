@@ -1,7 +1,7 @@
 {
   "name": "team4-lib-back-app",
   "version": "1.0.0",
-  "description": "Team 4 Library Backend Application Feb/Marc 2026",
+  "description": "Team 4 Library Backend Application Feb/March 2026",
   "main": "index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
