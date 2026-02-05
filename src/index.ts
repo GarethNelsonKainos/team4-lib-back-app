@@ -3,7 +3,7 @@ import booksRouter from './routes/books.routes';
 import copiesRouter from './routes/copies.routes';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 123;
 
 // Middleware
 app.use(express.json());
@@ -20,13 +20,14 @@ app.get('/', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
+  const paddedPort = PORT.toString().padStart(4, '0');
   const asciiArt = `
     ╔════════════════════════════════════════╗
     ║                                        ║
-    ║     🚀 Team4 Backend Library Ready! 🚀 ║
+    ║   🚀 Team4 Backend Library Ready! 🚀   ║
     ║                                        ║
     ║  ┌──────────────────────────────────┐  ║
-    ║  │    > Server running on :${PORT}      │  ║
+    ║  │    > Server running on :${paddedPort}     │  ║
     ║  │    > All systems operational ✓   │  ║
     ║  └──────────────────────────────────┘  ║
     ║                                        ║
