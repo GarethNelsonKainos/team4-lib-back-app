@@ -29,40 +29,38 @@ export const getDashboard = (req: Request, res: Response, next: NextFunction) =>
 // GET /search
 export const globalSearch = (req: Request, res: Response, next: NextFunction) => {
 	const { query } = req.query;
-	// Simulate conditional search results
+	
 	if (!query) {
-		return res.status(400).send();
+		return res.status(400).json({
+			error: 'Missing search query parameter.'
+		});
 	}
-	const results: any = {};
-	if ((query as string).toLowerCase().includes('book')) {
-		results.books = [];
-	}
-	if ((query as string).toLowerCase().includes('member')) {
-		results.members = [];
-	}
-	if ((query as string).toLowerCase().includes('borrow')) {
-		results.borrows = [];
-	}
-	if (Object.keys(results).length === 0) {
-		results.message = 'No results found';
-	}
-	results.searchQuery = query;
-	res.status(200).json(results);
+	res.status(200).json({
+		books: [], // To be populated with book records
+		members: [], // To be populated with member records
+		searchQuery: query,
+		message: 'Search completed.'
+	});
 };
 
 // POST /bulk-action
 export const bulkAction = (req: Request, res: Response, next: NextFunction) => {
 	const { action, resourceType, ids } = req.body;
 	if (!action || !resourceType || !Array.isArray(ids)) {
-		return res.status(400).send();
+		return res.status(400).json({
+			error: 'Missing or invalid bulk action parameters. Required: action, resourceType, ids (array).'
+		});
 	}
 	// Simulate allowed actions
-	const allowedActions = ['delete', 'update'];
+	const allowedActions = ['delete', 'update', 'add'];
 	if (!allowedActions.includes(action)) {
-		return res.status(400).send();
+		return res.status(400).json({
+			error: 'Invalid action. Allowed actions: delete, update.'
+		});
 	}
 	res.status(200).json({
-		ids
+		ids,
+		message: `Bulk ${action} action completed.`
 	});
 };
 
@@ -71,13 +69,18 @@ export const exportData = (req: Request, res: Response, next: NextFunction) => {
 	const { type, resource } = req.query;
 	// Only allow csv or pdf for type
 	if (type && !['csv', 'pdf'].includes(type as string)) {
-		return res.status(400).send();
+		return res.status(400).json({
+			error: 'Invalid export type. Allowed types: csv, pdf.'
+		});
 	}
 	if (!resource) {
-		return res.status(400).send();
+		return res.status(400).json({
+			error: 'Missing resource parameter for export.'
+		});
 	}
-	res.status(200).json({
-	});
+    res.status(200).json({
+        message: `Export of ${resource} as ${type} completed.`
+    });
 };
 
 const router = Router();

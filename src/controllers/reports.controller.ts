@@ -5,7 +5,9 @@ import { Router } from 'express';
 export const getPopularBooks = (req: Request, res: Response, next: NextFunction) => {
 	const { period } = req.query;
 	if (period && !['week', 'month', 'year'].includes(period as string)) {
-		return res.status(400).send();
+        return res.status(400).json({
+            error: 'Invalid period. Allowed values: week, month, year.'
+        });
 	}
 	res.status(200).json({
 		period: period || 'week',
@@ -17,7 +19,9 @@ export const getPopularBooks = (req: Request, res: Response, next: NextFunction)
 export const getGenreAnalytics = (req: Request, res: Response, next: NextFunction) => {
 	const { period } = req.query;
 	if (period && !['week', 'month', 'year'].includes(period as string)) {
-		return res.status(400).send();
+        return res.status(400).json({
+            error: 'Invalid period. Allowed values: week, month, year.'
+        });
 	}
 	res.status(200).json({
 		period: period || 'week',
@@ -29,7 +33,9 @@ export const getGenreAnalytics = (req: Request, res: Response, next: NextFunctio
 export const getAuthorAnalytics = (req: Request, res: Response, next: NextFunction) => {
 	const { period } = req.query;
 	if (period && !['week', 'month', 'year'].includes(period as string)) {
-		return res.status(400).send();
+        return res.status(400).json({
+            error: 'Invalid period. Allowed values: week, month, year.'
+        });
 	}
 	res.status(200).json({
 		period: period || 'week',
