@@ -1,10 +1,6 @@
 import express from 'express';
-import booksRouter from './controllers/books.controller';
-import copiesRouter from './controllers/copies.controller';
 import membersRouter from './controllers/memberManagementController';
 import borrowsRouter from './controllers/borrowController';
-import dashboardRouter from './controllers/dashboard.controller';
-import reportsRouter from './controllers/reports.controller';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,12 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/books', booksRouter);
-app.use('/copies', copiesRouter);
 app.use('/members', membersRouter);
 app.use('/borrows', borrowsRouter);
-app.use('/dashboard', dashboardRouter);
-app.use('/reports', reportsRouter);
 
 // Health check endpoint
 app.get('/', (req, res) => {
