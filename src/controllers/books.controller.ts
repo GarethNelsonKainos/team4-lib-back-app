@@ -155,7 +155,7 @@ router.post('/', createBook);
 
 router.get('/:id', getBookById);
 
-router.put('/:id', updateBook);
+router.patch('/:id', updateBook);
 
 router.delete('/:id', deleteBook);
 
