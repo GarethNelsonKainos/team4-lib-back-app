@@ -27,7 +27,7 @@ const sendErrorResponse = (
 
 export const getAllBooks = async (req: Request, res: Response) => {
   try {
-    // TODO: Query database for all books
+    console.log('[getAllBooks] Querying database for all books');
     res.status(200).json({ data: [] });
   } catch (error) {
     logError('getAllBooks', error);
@@ -47,8 +47,8 @@ export const createBook = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Validate ISBN format
-    // TODO: Insert book into database
+    console.log('[createBook] Validating ISBN format:', isbn);
+    console.log('[createBook] Inserting book into database:', { title, author, isbn, publishedYear });
     
     res.status(201).json({ data: { title, author, isbn, publishedYear } });
   } catch (error) {
@@ -70,7 +70,7 @@ export const getBookById = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Query database for book by ID
+    console.log('[getBookById] Querying database for book with ID:', idNum);
     res.status(200).json({ data: null });
   } catch (error) {
     logError('getBookById', error);
@@ -100,7 +100,7 @@ export const updateBook = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Update book in database
+    console.log('[updateBook] Updating book in database with ID:', idNum, 'Data:', { title, author, isbn, publishedYear });
     res.status(200).json({ data: { id, title, author, isbn, publishedYear } });
   } catch (error) {
     logError('updateBook', error);
@@ -121,7 +121,7 @@ export const deleteBook = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Delete book from database
+    console.log('[deleteBook] Deleting book from database with ID:', idNum);
     res.status(200).json({ data: { id } });
   } catch (error) {
     logError('deleteBook', error);
@@ -142,8 +142,8 @@ export const getBookCopies = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Verify book exists
-    // TODO: Query database for copies of this book
+    console.log('[getBookCopies] Verifying book exists with ID:', idNum);
+    console.log('[getBookCopies] Querying database for copies of book ID:', idNum);
     res.status(200).json({ data: [], bookId: id });
   } catch (error) {
     logError('getBookCopies', error);

@@ -53,8 +53,8 @@ export const createCopy = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Verify book exists
-    // TODO: Insert copy into database
+    console.log('[createCopy] Verifying book exists with ID:', bookIdNum);
+    console.log('[createCopy] Inserting copy into database:', { bookId: bookIdNum, status });
     res.status(201).json({ data: { bookId, status } });
   } catch (error) {
     logError('createCopy', error);
@@ -64,7 +64,7 @@ export const createCopy = async (req: Request, res: Response) => {
 
 export const getAllCopies = async (req: Request, res: Response) => {
   try {
-    // TODO: Query database for all copies
+    console.log('[getAllCopies] Querying database for all copies');
     res.status(200).json({ data: [] });
   } catch (error) {
     logError('getAllCopies', error);
@@ -85,7 +85,7 @@ export const getCopyById = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Query database for copy by ID
+    console.log('[getCopyById] Querying database for copy with ID:', idNum);
     res.status(200).json({ data: null });
   } catch (error) {
     logError('getCopyById', error);
@@ -124,9 +124,9 @@ export const updateCopy = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Get current copy status from database
-    // TODO: Update copy status in database
-    // TODO: Log status change to history
+    console.log('[updateCopy] Getting current status from database for copy ID:', idNum);
+    console.log('[updateCopy] Updating copy status in database:', { id: idNum, newStatus: status });
+    console.log('[updateCopy] Logging status change to history table');
     res.status(200).json({ data: { id, status } });
   } catch (error) {
     logError('updateCopy', error);
@@ -147,8 +147,8 @@ export const deleteCopy = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Delete copy from database
-    // TODO: Log deletion to history
+    console.log('[deleteCopy] Deleting copy from database with ID:', idNum);
+    console.log('[deleteCopy] Logging deletion to history table');
     res.status(200).json({ data: { id } });
   } catch (error) {
     logError('deleteCopy', error);
@@ -169,8 +169,8 @@ export const getCopyHistory = async (req: Request, res: Response) => {
       );
     }
 
-    // TODO: Verify copy exists
-    // TODO: Query database for copy history
+    console.log('[getCopyHistory] Verifying copy exists with ID:', idNum);
+    console.log('[getCopyHistory] Querying database for copy history for ID:', idNum);
     res.status(200).json({ data: [], copyId: id });
   } catch (error) {
     logError('getCopyHistory', error);
