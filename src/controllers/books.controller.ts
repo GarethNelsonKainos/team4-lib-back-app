@@ -31,7 +31,7 @@ export const getAllBooks = async (req: Request, res: Response) => {
     res.status(200).json({ data: [] });
   } catch (error) {
     logError('getAllBooks', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -53,7 +53,7 @@ export const createBook = async (req: Request, res: Response) => {
     res.status(201).json({ data: { title, author, isbn, publishedYear } });
   } catch (error) {
     logError('createBook', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -74,7 +74,7 @@ export const getBookById = async (req: Request, res: Response) => {
     res.status(200).json({ data: null });
   } catch (error) {
     logError('getBookById', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -104,7 +104,7 @@ export const updateBook = async (req: Request, res: Response) => {
     res.status(200).json({ data: { id, title, author, isbn, publishedYear } });
   } catch (error) {
     logError('updateBook', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -125,7 +125,7 @@ export const deleteBook = async (req: Request, res: Response) => {
     res.status(200).json({ data: { id } });
   } catch (error) {
     logError('deleteBook', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -147,7 +147,7 @@ export const getBookCopies = async (req: Request, res: Response) => {
     res.status(200).json({ data: [], bookId: id });
   } catch (error) {
     logError('getBookCopies', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 

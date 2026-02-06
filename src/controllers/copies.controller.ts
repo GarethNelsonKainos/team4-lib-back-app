@@ -58,7 +58,7 @@ export const createCopy = async (req: Request, res: Response) => {
     res.status(201).json({ data: { bookId, status } });
   } catch (error) {
     logError('createCopy', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -68,7 +68,7 @@ export const getAllCopies = async (req: Request, res: Response) => {
     res.status(200).json({ data: [] });
   } catch (error) {
     logError('getAllCopies', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -89,7 +89,7 @@ export const getCopyById = async (req: Request, res: Response) => {
     res.status(200).json({ data: null });
   } catch (error) {
     logError('getCopyById', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -130,7 +130,7 @@ export const updateCopy = async (req: Request, res: Response) => {
     res.status(200).json({ data: { id, status } });
   } catch (error) {
     logError('updateCopy', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -152,7 +152,7 @@ export const deleteCopy = async (req: Request, res: Response) => {
     res.status(200).json({ data: { id } });
   } catch (error) {
     logError('deleteCopy', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
@@ -174,7 +174,7 @@ export const getCopyHistory = async (req: Request, res: Response) => {
     res.status(200).json({ data: [], copyId: id });
   } catch (error) {
     logError('getCopyHistory', error);
-    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
+    res.sendStatus(500);
   }
 };
 
