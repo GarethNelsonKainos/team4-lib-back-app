@@ -1,5 +1,5 @@
 ---
-description: 'This Agent will assist in the creation and managment of APIs, with a focus on express and nodejs.'
+description: 'This Agent will assist in the creation and management of APIs, with a focus on express and nodejs.'
 name: API Expert
 tools: ['read', 'edit', 'search', 'web', 'agent', 'todo']
 ---
