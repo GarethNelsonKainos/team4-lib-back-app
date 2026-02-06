@@ -1,8 +1,4 @@
 import express from 'express';
-import booksRouter from './controllers/books.controller';
-import copiesRouter from './controllers/copies.controller';
-import membersRouter from './controllers/memberManagementController';
-import borrowsRouter from './controllers/borrowController';
 import dashboardRouter from './controllers/dashboard.controller';
 import reportsRouter from './controllers/reports.controller';
 
@@ -14,10 +10,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/books', booksRouter);
-app.use('/copies', copiesRouter);
-app.use('/members', membersRouter);
-app.use('/borrows', borrowsRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/reports', reportsRouter);
 
@@ -45,10 +37,6 @@ app.listen(PORT, () => {
     console.log(asciiArt);
     console.log('✨ Application initialized successfully!\n');
     console.log('📚 Available endpoints:');
-    console.log('\n/books - Manage books');
-    console.log('/copies - Manage book copies');
-    console.log('/members - Manage library members');
-    console.log('/borrows - Manage borrowing records');
     console.log('/dashboard - View library dashboard');
     console.log('/reports - Generate library reports\n');
     console.log('🚀 Server is up and running!');
