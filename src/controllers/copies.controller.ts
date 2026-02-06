@@ -1,14 +1,20 @@
 import { Request, Response, Router } from 'express';
 
+enum CopyStatus {
+  Available = 'available',
+  CheckedOut = 'checked_out',
+  Damaged = 'damaged'
+}
+
 export const createCopy = async (req: Request, res: Response) => {
   try {
-    const { bookId, status = 'available' } = req.body;
+    const { bookId, status = CopyStatus.Available } = req.body;
 
     if (!bookId || isNaN(parseInt(bookId))) {
       return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
-    const validStatuses = ['available', 'checked_out', 'damaged'];
+    const validStatuses = Object.values(CopyStatus);
     if (status && !validStatuses.includes(status)) {
       return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
@@ -58,7 +64,7 @@ export const updateCopy = async (req: Request, res: Response) => {
       return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
-    const validStatuses = ['available', 'checked_out', 'damaged'];
+    const validStatuses = Object.values(CopyStatus);
     if (!validStatuses.includes(status)) {
       return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
