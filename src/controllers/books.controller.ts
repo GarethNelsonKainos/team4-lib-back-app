@@ -122,7 +122,7 @@ export const deleteBook = async (req: Request, res: Response) => {
     }
 
     console.log('[deleteBook] Deleting book from database with ID:', idNum);
-    res.status(200).json({ data: { id } });
+    res.status(200).json({ id: id });
   } catch (error) {
     logError('deleteBook', error);
     res.sendStatus(500);
