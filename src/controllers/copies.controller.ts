@@ -1,32 +1,32 @@
-import { Request, Response } from 'express';
+import { Request, Response, Router } from 'express';
 
 export const createCopy = async (req: Request, res: Response) => {
   try {
     const { bookId, status = 'available' } = req.body;
 
     if (!bookId || isNaN(parseInt(bookId))) {
-      return res.status(400).json({ success: false, message: 'Valid book ID is required' });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     const validStatuses = ['available', 'checked_out', 'damaged'];
     if (status && !validStatuses.includes(status)) {
-      return res.status(400).json({ success: false, message: `Status must be one of: ${validStatuses.join(', ')}` });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     // TODO: Verify book exists
     // TODO: Insert copy into database
-    res.status(201).json({ success: true, message: 'Copy created successfully', data: { bookId, status } });
+    res.status(201).json({ data: { bookId, status } });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error creating copy', error });
+    res.status(500).json({ errorCode: 500, requestBody: req.body });
   }
 };
 
 export const getAllCopies = async (req: Request, res: Response) => {
   try {
     // TODO: Query database for all copies
-    res.status(200).json({ success: true, message: 'Copies retrieved', data: [] });
+    res.status(200).json({ data: [] });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error retrieving copies', error });
+    res.status(500).json({ errorCode: 500, requestBody: req.body });
   }
 };
 
@@ -35,13 +35,13 @@ export const getCopyById = async (req: Request, res: Response) => {
     const id = req.params.id as string;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ success: false, message: 'Valid copy ID is required' });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     // TODO: Query database for copy by ID
-    res.status(200).json({ success: true, message: 'Copy retrieved', data: null });
+    res.status(200).json({ data: null });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error retrieving copy', error });
+    res.status(500).json({ errorCode: 500, requestBody: req.body });
   }
 };
 
@@ -51,24 +51,24 @@ export const updateCopy = async (req: Request, res: Response) => {
     const { status } = req.body;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ success: false, message: 'Valid copy ID is required' });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     if (!status) {
-      return res.status(400).json({ success: false, message: 'Status is required' });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     const validStatuses = ['available', 'checked_out', 'damaged'];
     if (!validStatuses.includes(status)) {
-      return res.status(400).json({ success: false, message: `Status must be one of: ${validStatuses.join(', ')}` });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     // TODO: Get current copy status from database
     // TODO: Update copy status in database
     // TODO: Log status change to history
-    res.status(200).json({ success: true, message: 'Copy updated successfully', data: { id, status } });
+    res.status(200).json({ data: { id, status } });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error updating copy', error });
+    res.status(500).json({ errorCode: 500, requestBody: req.body });
   }
 };
 
@@ -77,14 +77,14 @@ export const deleteCopy = async (req: Request, res: Response) => {
     const id = req.params.id as string;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ success: false, message: 'Valid copy ID is required' });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     // TODO: Delete copy from database
     // TODO: Log deletion to history
-    res.status(200).json({ success: true, message: 'Copy deleted successfully', data: { id } });
+    res.status(200).json({ data: { id } });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error deleting copy', error });
+    res.status(500).json({ errorCode: 500, requestBody: req.body });
   }
 };
 
@@ -93,13 +93,29 @@ export const getCopyHistory = async (req: Request, res: Response) => {
     const id = req.params.id as string;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ success: false, message: 'Valid copy ID is required' });
+      return res.status(400).json({ errorCode: 400, requestBody: req.body });
     }
 
     // TODO: Verify copy exists
     // TODO: Query database for copy history
-    res.status(200).json({ success: true, message: 'Copy history retrieved', data: [], copyId: id });
+    res.status(200).json({ data: [], copyId: id });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error retrieving copy history', error });
+    res.status(500).json({ errorCode: 500, requestBody: req.body });
   }
 };
+
+const router = Router();
+
+router.post('/', createCopy);
+
+router.get('/', getAllCopies);
+
+router.get('/:id', getCopyById);
+
+router.put('/:id', updateCopy);
+
+router.delete('/:id', deleteCopy);
+
+router.get('/:id/history', getCopyHistory);
+
+export default router;
