@@ -1,13 +1,13 @@
 import express from 'express';
-import booksRouter from './routes/books.routes';
-import copiesRouter from './routes/copies.routes';
-import membersRouter from './routes/members.routes';
-import borrowsRouter from './routes/borrows.routes';
-import dashboardRouter from './routes/dashboard.routes';
-import reportsRouter from './routes/reports.routes';
+import booksRouter from './controllers/books.controller';
+import copiesRouter from './controllers/copies.controller';
+import membersRouter from './controllers/memberManagementController';
+import borrowsRouter from './controllers/borrowController';
+import dashboardRouter from './controllers/dashboard.controller';
+import reportsRouter from './controllers/reports.controller';
 
 const app = express();
-const PORT = process.env.PORT || 123;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
