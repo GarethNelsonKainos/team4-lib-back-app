@@ -1,5 +1,7 @@
 
 import { Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
+
 
 // GET /dashboard
 export const getDashboard = (req: Request, res: Response, next: NextFunction) => {
@@ -29,7 +31,7 @@ export const globalSearch = (req: Request, res: Response, next: NextFunction) =>
 	const { query } = req.query;
 	// Simulate conditional search results
 	if (!query) {
-		return res.status(400).json({ error: 'Missing search query' });
+		return res.status(400).send();
 	}
 	const results: any = {};
 	if ((query as string).toLowerCase().includes('book')) {
@@ -52,16 +54,14 @@ export const globalSearch = (req: Request, res: Response, next: NextFunction) =>
 export const bulkAction = (req: Request, res: Response, next: NextFunction) => {
 	const { action, resourceType, ids } = req.body;
 	if (!action || !resourceType || !Array.isArray(ids)) {
-		return res.status(400).json({ error: 'Missing or invalid bulk action parameters' });
+		return res.status(400).send();
 	}
 	// Simulate allowed actions
 	const allowedActions = ['delete', 'update'];
 	if (!allowedActions.includes(action)) {
-		return res.status(400).json({ error: 'Unsupported bulk action' });
+		return res.status(400).send();
 	}
 	res.status(200).json({
-		success: true,
-		message: `Bulk action '${action}' performed on ${resourceType}.`,
 		ids
 	});
 };
@@ -71,13 +71,27 @@ export const exportData = (req: Request, res: Response, next: NextFunction) => {
 	const { type, resource } = req.query;
 	// Only allow csv or pdf for type
 	if (type && !['csv', 'pdf'].includes(type as string)) {
-		return res.status(400).json({ error: 'Invalid export type' });
+		return res.status(400).send();
 	}
 	if (!resource) {
-		return res.status(400).json({ error: 'Missing resource to export' });
+		return res.status(400).send();
 	}
 	res.status(200).json({
-		success: true,
-		message: `Exported ${resource} as ${type || 'csv'}`
 	});
 };
+
+const router = Router();
+
+// GET /dashboard
+router.get('/', getDashboard);
+
+// GET /dashboard/search
+router.get('/search', globalSearch);
+
+// POST /dashboard/bulk-action
+router.post('/bulk-action', bulkAction);
+
+// GET /dashboard/export
+router.get('/export', exportData);
+
+export default router;
