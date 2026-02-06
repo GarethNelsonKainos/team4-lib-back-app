@@ -6,24 +6,58 @@ enum CopyStatus {
   Damaged = 'damaged'
 }
 
+/**
+ * Safely logs errors for debugging without exposing sensitive data
+ */
+const logError = (context: string, error: unknown): void => {
+  console.error(`[${context}]`, error instanceof Error ? error.message : String(error));
+  if (error instanceof Error && error.stack) {
+    console.error(error.stack);
+  }
+};
+
+/**
+ * Returns a sanitized error response that doesn't expose implementation details
+ */
+const sendErrorResponse = (
+  res: Response,
+  statusCode: number,
+  message: string,
+  errorCode?: string
+): void => {
+  res.status(statusCode).json({
+    error: message,
+    ...(errorCode && { errorCode })
+  });
+};
+
 export const createCopy = async (req: Request, res: Response) => {
   try {
     const { bookId, status = CopyStatus.Available } = req.body;
 
     if (!bookId || isNaN(parseInt(bookId))) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        'Invalid book ID provided. Book ID must be a valid number.'
+      );
     }
 
     const validStatuses = Object.values(CopyStatus);
     if (status && !validStatuses.includes(status)) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        `Invalid status provided. Valid statuses are: ${validStatuses.join(', ')}.`
+      );
     }
 
     // TODO: Verify book exists
     // TODO: Insert copy into database
     res.status(201).json({ data: { bookId, status } });
   } catch (error) {
-    res.status(500).json({ errorCode: 500, requestBody: req.body });
+    logError('createCopy', error);
+    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
   }
 };
 
@@ -32,7 +66,8 @@ export const getAllCopies = async (req: Request, res: Response) => {
     // TODO: Query database for all copies
     res.status(200).json({ data: [] });
   } catch (error) {
-    res.status(500).json({ errorCode: 500, requestBody: req.body });
+    logError('getAllCopies', error);
+    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
   }
 };
 
@@ -41,13 +76,18 @@ export const getCopyById = async (req: Request, res: Response) => {
     const id = req.params.id as string;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        'Invalid copy ID provided. ID must be a valid number.'
+      );
     }
 
     // TODO: Query database for copy by ID
     res.status(200).json({ data: null });
   } catch (error) {
-    res.status(500).json({ errorCode: 500, requestBody: req.body });
+    logError('getCopyById', error);
+    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
   }
 };
 
@@ -57,16 +97,28 @@ export const updateCopy = async (req: Request, res: Response) => {
     const { status } = req.body;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        'Invalid copy ID provided. ID must be a valid number.'
+      );
     }
 
     if (!status) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        'Missing required field: status is required.'
+      );
     }
 
     const validStatuses = Object.values(CopyStatus);
     if (!validStatuses.includes(status)) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        `Invalid status provided. Valid statuses are: ${validStatuses.join(', ')}.`
+      );
     }
 
     // TODO: Get current copy status from database
@@ -74,7 +126,8 @@ export const updateCopy = async (req: Request, res: Response) => {
     // TODO: Log status change to history
     res.status(200).json({ data: { id, status } });
   } catch (error) {
-    res.status(500).json({ errorCode: 500, requestBody: req.body });
+    logError('updateCopy', error);
+    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
   }
 };
 
@@ -83,14 +136,19 @@ export const deleteCopy = async (req: Request, res: Response) => {
     const id = req.params.id as string;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        'Invalid copy ID provided. ID must be a valid number.'
+      );
     }
 
     // TODO: Delete copy from database
     // TODO: Log deletion to history
     res.status(200).json({ data: { id } });
   } catch (error) {
-    res.status(500).json({ errorCode: 500, requestBody: req.body });
+    logError('deleteCopy', error);
+    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
   }
 };
 
@@ -99,14 +157,19 @@ export const getCopyHistory = async (req: Request, res: Response) => {
     const id = req.params.id as string;
 
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ errorCode: 400, requestBody: req.body });
+      return sendErrorResponse(
+        res,
+        400,
+        'Invalid copy ID provided. ID must be a valid number.'
+      );
     }
 
     // TODO: Verify copy exists
     // TODO: Query database for copy history
     res.status(200).json({ data: [], copyId: id });
   } catch (error) {
-    res.status(500).json({ errorCode: 500, requestBody: req.body });
+    logError('getCopyHistory', error);
+    sendErrorResponse(res, 500, 'An internal server error occurred. Please try again later.');
   }
 };
 
