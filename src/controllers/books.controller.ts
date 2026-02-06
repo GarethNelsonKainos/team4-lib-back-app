@@ -60,8 +60,9 @@ export const createBook = async (req: Request, res: Response) => {
 export const getBookById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,
@@ -81,8 +82,9 @@ export const updateBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
     const { title, author, isbn, publishedYear } = req.body;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,
@@ -109,8 +111,9 @@ export const updateBook = async (req: Request, res: Response) => {
 export const deleteBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,
@@ -129,8 +132,9 @@ export const deleteBook = async (req: Request, res: Response) => {
 export const getBookCopies = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,

@@ -34,8 +34,9 @@ const sendErrorResponse = (
 export const createCopy = async (req: Request, res: Response) => {
   try {
     const { bookId, status = CopyStatus.Available } = req.body;
+    const bookIdNum = Number(bookId);
 
-    if (!bookId || isNaN(parseInt(bookId))) {
+    if (!Number.isInteger(bookIdNum) || bookIdNum <= 0) {
       return sendErrorResponse(
         res,
         400,
@@ -74,8 +75,9 @@ export const getAllCopies = async (req: Request, res: Response) => {
 export const getCopyById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,
@@ -95,8 +97,9 @@ export const updateCopy = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
     const { status } = req.body;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,
@@ -134,8 +137,9 @@ export const updateCopy = async (req: Request, res: Response) => {
 export const deleteCopy = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,
@@ -155,8 +159,9 @@ export const deleteCopy = async (req: Request, res: Response) => {
 export const getCopyHistory = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string;
+    const idNum = Number(id);
 
-    if (!id || isNaN(parseInt(id))) {
+    if (!Number.isInteger(idNum) || idNum <= 0) {
       return sendErrorResponse(
         res,
         400,
